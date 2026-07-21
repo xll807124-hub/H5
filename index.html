@@ -51,16 +51,18 @@
     .hero {
       display: flex;
       gap: 20px;
+      height: 180px;
       align-items: flex-start;
-      padding: 36px 36px 28px;
+      /* padding: 36px 36px 28px; */
+      padding: 1.5% 3% 1.5% 5%;
       border-bottom: 1px solid var(--line);
       background: linear-gradient(180deg, #fbfbfa 0%, #fff 100%);
     }
 
     .avatar {
       flex: 0 0 auto;
-      width: 88px;
-      height: 88px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       overflow: hidden;
       border: 2px solid #fff;
@@ -81,7 +83,16 @@
       .avatar { width: 72px; height: 72px; }
     }
 
-    .hero-main { flex: 1; min-width: 0; }
+    .hero-main { 
+      flex: 1; 
+      display: flex;
+      min-width: 0; 
+      height: 150px;
+      justify-content:center;
+      align-items: flex-start;
+      flex-direction: column;
+      margin: auto 0 auto 2%;
+    }
     .name-row {
       display: flex;
       flex-wrap: wrap;
@@ -118,14 +129,14 @@
     .meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px 16px;
-      font-size: 13px;
+      gap: 8px 10px;
       color: var(--muted);
     }
     .meta span, .meta a {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      font-size: 18px;
+      gap: 8px;
     }
     .dot { width: 3px; height: 3px; border-radius: 50%; background: #b0aea8; margin: auto 0 ;}
 
@@ -207,16 +218,20 @@
     }
 
     .timeline {
+      --rail-gutter: 22px;
+      --rail-x: 11px; /* 竖线中心，相对 timeline 左缘 */
+      --dot-size: 9px;
       position: relative;
-      padding-left: 22px;
+      padding-left: var(--rail-gutter);
     }
     .timeline::before {
       content: "";
       position: absolute;
-      left: 5px;
+      left: var(--rail-x);
       top: 8px;
       bottom: 8px;
       width: 1px;
+      transform: translateX(-50%);
       background: linear-gradient(180deg, var(--accent), var(--line));
     }
     .card {
@@ -300,10 +315,12 @@
     .card::before {
       content: "";
       position: absolute;
-      left: -3.5%;
+      /* 与 timeline 竖线共用 --rail-x，像素定位不随卡片宽度漂移 */
+      left: calc(-1 * var(--rail-gutter) + var(--rail-x));
       top: 22px;
-      width: 9px;
-      height: 9px;
+      width: var(--dot-size);
+      height: var(--dot-size);
+      transform: translateX(-50%);
       border-radius: 50%;
       background: var(--paper);
       border: 2px solid var(--accent);
@@ -463,8 +480,6 @@
       }
       .main { padding: 20px 18px 28px; }
       .name { font-size: 28px; }
-      .timeline { padding-left: 18px; }
-      .card::before { left: -17px; }
       .to-top { right: 14px; bottom: 14px; width: 44px; height: 44px; }
     }
 
@@ -501,9 +516,9 @@
           <div class="meta">
             <span>出生年月：2001.07</span>
             <span class="dot" aria-hidden="true"></span>
-            联系电话：<a href="tel:17606081630">17606081630</a>
+            <span>联系电话:</span><a href="tel:17606081630">17606081630</a>
             <span class="dot" aria-hidden="true"></span>
-            邮箱：<a href="mailto:2623494316@qq.com">2623494316@qq.com</a>
+            <span>邮箱:</span><a href="mailto:2623494316@qq.com">2623494316@qq.com</a>
           </div>
         </div>
       </header>
@@ -559,7 +574,6 @@
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">MySQL</span>
                 <span class="tag">Redis</span>
-                <span class="tag">SQLite</span>
               </div>
             </div>
 
@@ -579,11 +593,13 @@
             <div class="stack-group">
               <div class="stack-label">工程 / 运维</div>
               <div class="tags">
-                <span class="tag">Docker Compose</span>
+                <span class="tag">Docker</span>
                 <span class="tag">Nginx</span>
                 <span class="tag">Gunicorn</span>
                 <span class="tag">Prometheus</span>
                 <span class="tag">Playwright</span>
+                <span class="tag">Selenium</span>
+                <span class="tag">Scrapy</span>
                 <span class="tag">Jest / Vitest</span>
                 <span class="tag">k6</span>
                 <span class="tag">ReportLab</span>
