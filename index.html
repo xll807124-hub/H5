@@ -326,6 +326,12 @@
       border: 2px solid var(--accent);
       box-shadow: 0 0 0 3px #fff;
     }
+    .card.fold-solo {
+      margin-bottom: 0;
+    }
+    .card.fold-solo::before {
+      display: none;
+    }
 
     .card-head {
       display: flex;
@@ -422,6 +428,24 @@
     .job-co, .edu-school { font-weight: 700; font-size: 14px; }
     .job-meta, .edu-meta { font-size: 12px; color: var(--muted); }
     .job-line { font-size: 13px; color: #333; }
+
+    .flow-block {
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      background: #faf9f7;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .flow-block:last-child { margin-bottom: 0; }
+    .flow-label {
+      font-size: 12.5px;
+      font-weight: 650;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+    }
+    .flow-block .bullets { margin-bottom: 0; }
+    .flow-block .bullets li { font-size: 13px; }
 
     .to-top {
       position: fixed;
@@ -606,6 +630,15 @@
                 <span class="tag">ReportLab</span>
               </div>
             </div>
+
+            <div class="stack-group">
+              <div class="stack-label">AI 辅助工具</div>
+              <div class="tags">
+                <span class="tag">Cursor</span>
+                <span class="tag">Kimi</span>
+                <span class="tag">Codex</span>
+              </div>
+            </div>
           </section>
 
 
@@ -619,9 +652,43 @@
                 <div class="job-co">福州跨度网络科技有限公司</div>
                 <div class="job-meta">AI全栈开发工程师</div>
               </div>
-              <p class="job-line">独立交付客源分配、客户分流、小贷进件与内部 IM 等多条业务线，覆盖高并发一致性、实时通信与移动端签约。</p>
+              <p class="job-line">独立交付客源分配、客户分流、小贷进件与内部 IM 等多条业务线，覆盖高并发一致性、实时通信与移动端签约；以 Cursor / Kimi / Codex 辅助设计与编码，采用「方案拆解 → 小任务落地 → 单任务验收」的可控协作流程。</p>
             </div>
           </section>
+
+          <section class="sec">
+            <h2 class="sec-title">AI 辅助研发</h2>
+            <article class="card fold-solo" tabindex="0" role="button" aria-expanded="false">
+              <div class="card-head">
+                <h3 class="proj-name">可控协作流程</h3>
+                <span class="proj-time">Cursor · Kimi · Codex</span>
+                <span class="card-toggle" aria-hidden="true"><span class="toggle-text"></span></span>
+              </div>
+              <div class="highlights"><strong>方法</strong> · 多轮对话收敛方案 → 按模块拆小任务 → 任务蓝图含异常与降级 → 逐项编码验收；以架构边界与最小 diff 约束变更，用文档接力会话记忆</div>
+              <div class="card-detail">
+                <div class="card-detail-inner">
+                  <div class="flow-block">
+                    <div class="flow-label">设计方案方法</div>
+                    <ul class="bullets">
+                      <li>围绕产品画像与业务目标，与 AI 多轮对话收敛整体技术方案，明确边界、非功能指标与验收标准后再进入实现</li>
+                      <li>将整体方案按功能模块拆解为可独立交付的小任务；对每个小任务再次与 AI 生成详细设计蓝图，覆盖主流程、异常分支、潜在缺陷、降级策略与异常处理机制</li>
+                      <li>按小任务逐项委托编码：完成一项即执行对应测试与人工复核，达标后再开启下一任务，避免一次性大范围改动失控</li>
+                    </ul>
+                  </div>
+                  <div class="flow-block">
+                    <div class="flow-label">迭代开发与变更控制</div>
+                    <ul class="bullets">
+                      <li>以仓库内架构边界、模块约定与 Agent 规则作为持久上下文，约束 AI 仅修改任务相关文件，禁止跨域「顺手重构」</li>
+                      <li>提示词限定最小 diff 与影响面；修复缺陷时要求先给出根因与回归范围，再提交变更，并以单测 / 冒烟 / 相关用例验收，防止「修一处坏多处」</li>
+                      <li>长对话易漂移时，开启新会话并注入：架构文档摘要、相关代码路径、当前任务蓝图与已验收结论，用外部文档接力记忆，而非依赖模型隐式回忆</li>
+                      <li>迭代闭环：需求变更 → 更新任务蓝图 → 局部实现 → Diff 审阅 → 回归测试 → 归档结论；未通过验收不合并、不扩展下一任务范围</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+
           <section class="sec">
             <h2 class="sec-title">项目经验</h2>
             <div class="timeline">
@@ -629,25 +696,29 @@
               <article class="card" tabindex="0" role="button" aria-expanded="false">
                 <div class="card-head">
                   <h3 class="proj-name">客源分流系统</h3>
-                  <span class="proj-time">B2B 客源分配平台</span>
+                  <span class="proj-time">福州跨度 · B2B 客源分配平台</span>
                   <span class="card-toggle" aria-hidden="true"><span class="toggle-text"></span></span>
                 </div>
-                <div class="highlights"><strong>亮点</strong> · PostgreSQL 行锁 + <code>SKIP LOCKED</code> 并发抢单零超发；Celery 唯一写 / status 只读拆分轮询写风暴；动态配额间隔算法把时段额度匀速耗尽</div>
+                <div class="highlights"><strong>亮点</strong> · PostgreSQL 行锁与 <code>SKIP LOCKED</code> 保障并发抢单不重复、不超配额；<code>auto_push</code> 读写路径分离，Celery 为唯一写入入口；动态配额间隔算法实现时段内近似匀速耗尽；语义化业务码与并发压测用例固化契约</div>
                 <div class="card-detail">
                   <div class="card-detail-inner">
-                    <p class="proj-one">管理员导入客源，业务员按日/时段配额主动领取或 Celery 自动推送</p>
+                    <p class="proj-one">B2B 客源管理与分配平台：管理员集中导入维护电话客源，业务员在工作时段内按日/时段配额主动领取，或由 Celery 定时自动推送</p>
                     <div class="proj-tech">
                       <span class="tag">Django 5.2</span>
                       <span class="tag">DRF</span>
                       <span class="tag">Vue 3</span>
+                      <span class="tag">PrimeVue</span>
                       <span class="tag">Celery</span>
                       <span class="tag">PostgreSQL</span>
                       <span class="tag">Redis</span>
+                      <span class="tag">SimpleJWT</span>
                     </div>
                     <ul class="bullets">
-                      <li>设计分配内核：事务 + <code>select_for_update(skip_locked=True)</code>，并发抢单不重复、不超配额</li>
-                      <li>拆分读写路径：auto_push 仅 Celery 写入，status 接口纯只读，消除轮询写风暴</li>
-                      <li>实现配额节奏算法（剩余分钟/剩余配额），避免时段开始瞬间领完；配套压测与并发单测</li>
+                      <li>设计分配内核 <code>DistributeEngine</code>：事务内锁定日/时段计数器，对可用客源执行 <code>select_for_update(skip_locked=True)</code> 按入库时间 FIFO 领取，多 worker 并发下一人一线索且不超日/时段配额</li>
+                      <li>拆分双模式写入路径：<code>active_claim</code> 经 <code>POST /distribute/claim/</code> 申请；<code>auto_push</code> 仅由 Celery <code>run_cycle</code>（60s）写入，<code>GET claim/status</code> 纯只读，避免前端轮询与定时任务争锁形成写风暴</li>
+                      <li>实现配额节奏算法：主动申请按「剩余分钟 / 剩余配额」动态计算间隔，过快返回 <code>40007 CLAIM_TOO_FAST</code>；自动推送按「时段总分钟 / 配额上限」固定节奏，使额度在时段内近似匀速消耗</li>
+                      <li>构建鉴权与领域接口：SimpleJWT（Refresh 轮换）；角色 RBAC（admin/sales）；统一响应 <code>{code,message,data,request_id}</code>；REST 覆盖 auth/accounts/leads/distribute/configure/integrate/reports</li>
+                      <li>落地配置缓存与导入隔离：分配参数 Redis 缓存并在故障时降级直查；外部脚本子进程沙箱执行（超时与输出上限）；配套并发单测与压测脚本验证抢单正确性</li>
                     </ul>
                   </div>
                 </div>
@@ -656,25 +727,29 @@
               <article class="card" tabindex="0" role="button" aria-expanded="false">
                 <div class="card-head">
                   <h3 class="proj-name">客户分配系统</h3>
-                  <span class="proj-time">客服协同运营后台</span>
+                  <span class="proj-time">福州跨度 · 客服协同运营后台</span>
                   <span class="card-toggle" aria-hidden="true"><span class="toggle-text"></span></span>
                 </div>
-                <div class="highlights"><strong>亮点</strong> · 分配指针 + 客户行 <code>select_for_update</code> 保证轮询不重不漏；HTTP 内同步分配，Worker 宕机也不积压 pending；同源 BFF + 可选 HMAC 写防护挡住直连绕过</div>
+                <div class="highlights"><strong>亮点</strong> · 客户行与分配指针 <code>select_for_update</code> 保障 Round-Robin 不重不漏；主分配路径于 HTTP 请求内同步落库，不依赖 Celery Worker；同源 BFF 与可选写接口 HMAC；动作级 RBAC 与对象级数据隔离</div>
                 <div class="card-detail">
                   <div class="card-detail-inner">
-                    <p class="proj-one">电话客服录入 → 轮询/手动指定聊天客服 → 多角色跟进与催促</p>
+                    <p class="proj-one">内部运营平台：电话客服录入客户，按可分配名单自动轮询或手动指定聊天客服，多角色协同跟进状态与催促通知</p>
                     <div class="proj-tech">
-                      <span class="tag">Django + DRF</span>
-                      <span class="tag">Next.js</span>
+                      <span class="tag">Django 5.2</span>
+                      <span class="tag">DRF</span>
+                      <span class="tag">Next.js 13</span>
                       <span class="tag">TypeScript</span>
+                      <span class="tag">PostgreSQL</span>
                       <span class="tag">Redis</span>
                       <span class="tag">Celery</span>
                       <span class="tag">PrimeReact</span>
                     </div>
                     <ul class="bullets">
-                      <li>实现 Round-Robin 分配：客户行与分配指针 <code>select_for_update</code>，杜绝重复/跳号</li>
-                      <li>主分配路径同步落库（不绑死 Worker），创建接口返回前可见分配结果或失败原因</li>
-                      <li>构建同源 BFF + Cookie JWT；动作级 RBAC、登录限流、可选写接口 HMAC、Prometheus 指标</li>
+                      <li>设计 Round-Robin 分配内核：事务内对 <code>Customer</code> 与 <code>SupportAllocationPointer</code> 加行锁，按 <code>(last_index + 1) % n</code> 轮转客服，在数据库层串行化临界区，避免并发创建导致重复分配或跳号</li>
+                      <li>主分配路径同步执行：创建 / 重分配 / 触发分配在 HTTP 请求内完成落库并返回结果或失败原因，不依赖 Worker 可用性；Celery 任务保留供显式异步场景，消除「任务未消费、客户长期 pending」类故障</li>
+                      <li>统一自动与手动分配契约：可选 <code>assigned_user</code>（须在 <code>SupportUserOrder</code> 名单内）直接标记完成并催促；未指定则进入轮询；配套 <code>remind-support</code> / <code>reassign-support</code> / <code>trigger-assign</code> 等 REST 动作</li>
+                      <li>构建鉴权与权限体系：SimpleJWT（旋转 Refresh + 黑名单）与 Cookie 传输；动作级 RBAC 叠加 QuerySet 隔离（超管全量 / 聊天客服仅本人客户 / 电话客服仅本人创建）；登录多维限流与 DRF Throttle</li>
+                      <li>落地同源 BFF 与写防护：Next.js Route Handler 代理 <code>/api/v1</code>，可选 HMAC-SHA256 签名阻断直连绕过；催促采用 Redis 列表 + 前端轮询（兼容静态导出）；Prometheus 指标与 live/ready 探针支撑可观测运维</li>
                     </ul>
                   </div>
                 </div>
@@ -686,23 +761,26 @@
                   <span class="proj-time">福州跨度 · Monorepo IM</span>
                   <span class="card-toggle" aria-hidden="true"><span class="toggle-text"></span></span>
                 </div>
-                <div class="highlights"><strong>亮点</strong> · Socket 乐观广播 + BullMQ 异步落库，实时与可靠兼得；ECDH P-256 + AES-GCM 端到端，服务端零知识；历史翻页 Redis/本地多级缓存 + 软限流扛住狂刷</div>
+                <div class="highlights"><strong>亮点</strong> · Socket 乐观广播与 BullMQ 异步持久化解耦；ECDH P-256 + AES-GCM 会话制端到端加密（服务端零知识）；HttpOnly JWT 与双提交 CSRF；历史消息多级缓存与软限流；WebRTC Mesh 信令及 PWA Web Push</div>
                 <div class="card-detail">
                   <div class="card-detail-inner">
-                    <p class="proj-one">网页即时通讯平台：私聊/群聊、E2E 会话加密、WebRTC 语音、PWA Push</p>
+                    <p class="proj-one">前后端分离即时通讯系统：REST <code>/api</code> 与 Socket.IO 双通道，覆盖私聊/群聊、会话制 E2E、WebRTC 语音、文件与语音消息、PWA 推送及超级管理员后台</p>
                     <div class="proj-tech">
-                      <span class="tag">NestJS</span>
+                      <span class="tag">NestJS 11</span>
                       <span class="tag">React 19</span>
                       <span class="tag">Socket.IO</span>
-                      <span class="tag">Prisma</span>
+                      <span class="tag">Prisma + PG</span>
                       <span class="tag">Redis</span>
                       <span class="tag">BullMQ</span>
                       <span class="tag">WebRTC</span>
+                      <span class="tag">Web Push</span>
                     </div>
                     <ul class="bullets">
-                      <li>主导实时消息路径：Gateway 乐观广播 + BullMQ 异步落库，失败回传 <code>message:failed</code></li>
-                      <li>落地私聊 E2E：浏览器 ECDH P-256 + AES-GCM，服务端仅存公钥与密文（零知识）</li>
-                      <li>攻克历史翻页限流：Redis/本地多级缓存 + 软限流与前端冷却，压低 DB 与 Throttler 冲击</li>
+                      <li>设计消息唯一写入路径：客户端 <code>message:send</code> → Gateway 校验并广播 <code>message:new</code> → BullMQ <code>message-persist</code> 异步落库；持久化失败回传 <code>message:failed</code>，兼顾低延迟推送与最终一致性</li>
+                      <li>实现私聊会话制端到端加密：浏览器侧 ECDH P-256 密钥协商与 AES-GCM 加密；服务端仅存储公钥与密文；会话状态由 Redis 管理（invite→accept→<code>session_start</code>），用户离线即终止会话，服务端不具备解密能力</li>
+                      <li>构建鉴权与接口体系：HttpOnly Access/Refresh Cookie、双提交 CSRF（<code>X-CSRF-Token</code>）、Helmet 与 Throttler；REST 涵盖 auth/chat/friends/groups/files/call/push/admin；WebSocket 涵盖消息、离线同步、E2E 与通话信令；通过 <code>@chat/shared</code> 统一事件名与 DTO 契约</li>
+                      <li>优化历史消息分页：消息查询采用软限流，结合 Redis 分页缓存与前端 localStorage 及请求串行冷却，降低高频翻页对全局限流与数据库的冲击</li>
+                      <li>落地语音通话与会话恢复：Socket 信令配合 Redis 通话状态，ICE/TURN 可配置，群通话 Mesh 上限 8 人；集成 PWA VAPID 推送；WebSocket 重连前执行会话 refresh，保障 iOS 后台唤醒后的鉴权与连接可用性</li>
                     </ul>
                   </div>
                 </div>
@@ -711,25 +789,29 @@
               <article class="card" tabindex="0" role="button" aria-expanded="false">
                 <div class="card-head">
                   <h3 class="proj-name">小额借贷业务系统</h3>
-                  <span class="proj-time">进件 / 审核 / 电子签全链路</span>
+                  <span class="proj-time">福州跨度 · 进件 / 审核 / 电子签全链路</span>
                   <span class="card-toggle" aria-hidden="true"><span class="toggle-text"></span></span>
                 </div>
-                <div class="highlights"><strong>亮点</strong> · ReportLab 中文合同 + 签名坐标精确定位，可直接法务归档；合同号时间戳可读 + DB 唯一约束抗并发碰撞；Canvas DPR 高清签名 + 防重复提交，进件链路状态强一致</div>
+                <div class="highlights"><strong>亮点</strong> · ReportLab 注册中文字体生成可归档合同 PDF，签名图按中文排版坐标精确定位；合同号可读时间戳 + DB 唯一约束与重试抗并发碰撞；Canvas <code>devicePixelRatio</code> 高清签名与防重复提交保障进件状态一致</div>
                 <div class="card-detail">
                   <div class="card-detail-inner">
-                    <p class="proj-one">用户端进件核验与电子签约；运营端审核、要素校验与合同 PDF 归档</p>
+                    <p class="proj-one">移动端进件与运营审核平台：身份核验、审核状态机流转，征信授权与借条双协议电子签，合同 PDF 归档与 Admin 要素核验</p>
                     <div class="proj-tech">
                       <span class="tag">Vue 3</span>
                       <span class="tag">Vant 4</span>
-                      <span class="tag">Django</span>
+                      <span class="tag">TypeScript</span>
+                      <span class="tag">Django 5.2</span>
                       <span class="tag">MySQL</span>
                       <span class="tag">ReportLab</span>
                       <span class="tag">PyJWT</span>
+                      <span class="tag">Import-Export</span>
                     </div>
                     <ul class="bullets">
-                      <li>打通进件 → 人脸/银行卡/联系人核验 → 审核状态机 → 征信/借条双协议电子签闭环</li>
-                      <li>攻克中文合同 PDF + 手写签名精确定位；合同号可读时间戳 + DB 唯一约束防碰撞</li>
-                      <li>优化移动端签名：Canvas DPR 适配、防重复提交；Admin 一键要素核验与 Excel 导入导出</li>
+                      <li>打通进件全链路：资料采集与证件上传 → 人脸比对 / 银行卡与联系人要素核验 → 审核状态机 → 征信授权与借条双协议签署 → 运营端 PDF 导出归档</li>
+                      <li>实现合同 PDF 引擎：ReportLab 注册字体排版正文与编号；经签名图 Table/缩进按中文字符宽度偏移插入约定位置，借条与征信协议分别控制插入偏移，满足法务可读归档</li>
+                      <li>设计合同编号生成：前缀 + 可读时间戳，配合 <code>contract_number</code> 唯一约束与冲突重试，保障高并发下编号不碰撞</li>
+                      <li>优化移动端电子签：基于 signature_pad，Canvas 按 <code>devicePixelRatio</code> 缩放绘制高清笔迹；提交态互斥防重复上传；签名经 <code>/user/upload_xy/</code> 落库并回写协议记录</li>
+                      <li>构建运营审核能力：接入第三方一键核验客户信息、证件影像预览；PyJWT 鉴权覆盖登录、进件更新、人脸状态与协议查询等用户域接口</li>
                     </ul>
                   </div>
                 </div>
@@ -769,7 +851,7 @@
         card.setAttribute("aria-expanded", open ? "true" : "false");
       }
 
-      document.querySelectorAll(".timeline .card").forEach(function (card) {
+      document.querySelectorAll(".card[role='button']").forEach(function (card) {
         card.addEventListener("click", function () {
           toggleCard(card);
         });
